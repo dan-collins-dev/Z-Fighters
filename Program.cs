@@ -36,7 +36,6 @@ class Program
                     Console.WriteLine("Invalid Choice");
                     break;
             }
-            
         }
     }
 
@@ -46,25 +45,44 @@ class Program
         {
             Console.Write("Fighter's Name: ");
             string name = Console.ReadLine()!.Trim();
+
             Console.Write("Fighter's Race: ");
             string race = Console.ReadLine()!.Trim();
+            
             Console.Write("Fighter's Home Planet: ");
             string homePlanet = Console.ReadLine()!.Trim();
-            Console.Write("Fighter's PowerLevel: ");
+            
+            Console.Write("Fighter's Power Level: ");
             int powerLevel = int.Parse(Console.ReadLine()!);
+            Console.WriteLine("");
+
+            if (name.Length <= 0 || race.Length <= 0 || homePlanet.Length <= 0)
+            {
+                throw new FormatException("Name cannot be an empty string");
+            }
+
+            if (powerLevel <= 0)
+            {
+                throw new ArgumentOutOfRangeException("A fighter's power level must be above 0");
+            }
 
             fighters.Add(new(name, race, homePlanet, powerLevel));
             Console.WriteLine("");
         }
         catch (FormatException ex)
         {
-            Console.WriteLine("Fighter not created");
             Console.WriteLine($"{ex.Message}");
+            Console.WriteLine("Fighter not created");
         }
         catch (OverflowException ex)
         {
-            Console.WriteLine("Fighter not created");
             Console.WriteLine($"{ex.Message}");
+            Console.WriteLine("Fighter not created");
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+            Console.WriteLine("Fighter not created");
         }
     }
 
@@ -73,10 +91,10 @@ class Program
         Console.WriteLine("==========================");
         Console.WriteLine("=        ZFighters       =");
         Console.WriteLine("==========================");
-        Console.WriteLine("[1] Display All Z Fighters");
+        Console.WriteLine("[1] Display all Z Fighters");
         Console.WriteLine("[2] Add a Z Fighter");
         Console.WriteLine("[3] Save existing Z Fighters");
-        Console.WriteLine("[4] Quit");
+        Console.WriteLine("[4] Quit without saving");
     }
 
     public static void DisplayAllZFighters(List<ZFighter> fighters)
