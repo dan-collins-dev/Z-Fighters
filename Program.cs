@@ -1,13 +1,11 @@
-﻿using System.Text.Json;
-
-namespace ZFighters;
+﻿namespace ZFighters;
 
 class Program
 {
     static void Main(string[] args)
     {
         bool isRunning = true;
-        List<ZFighter> zFighters = GetZFightersFromFile();
+        List<ZFighter> zFighters = Utils.GetZFightersFromFile();
 
         while (isRunning)
         {
@@ -27,7 +25,7 @@ class Program
                     break;
 
                 case 3:
-                    SaveZFightersToFile(zFighters);
+                    Utils.SaveZFightersToFile(zFighters);
                     break;
                 
                 case 4:
@@ -42,49 +40,21 @@ class Program
         }
     }
 
-    public static List<ZFighter> GetZFightersFromFile()
-    {
-        string currentDirectory = Directory.GetCurrentDirectory();
-        string filePath = Path.Combine(currentDirectory, "data", "zfighters.json");
-
-        string zFightersJsonString = File.ReadAllText(filePath);
-
-        JsonSerializerOptions options = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
-        return JsonSerializer.Deserialize<List<ZFighter>>(zFightersJsonString, options)!;
-    }
-
-    public static void SaveZFightersToFile(List<ZFighter> fighters)
-    {
-        string currentDirectory = Directory.GetCurrentDirectory();
-        string filePath = Path.Combine(currentDirectory, "data", "zfighters.json");
-
-        JsonSerializerOptions options = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
-        string stringifiedFighters = JsonSerializer.Serialize<List<ZFighter>>(fighters, options);
-        File.WriteAllText(filePath, stringifiedFighters);
-    }
-
     public static void AddZFighter(List<ZFighter> fighters)
     {
         try
         {
             Console.Write("Fighter's Name: ");
-            string name = Console.ReadLine()!;
+            string name = Console.ReadLine()!.Trim();
             Console.Write("Fighter's Race: ");
-            string race = Console.ReadLine()!;
+            string race = Console.ReadLine()!.Trim();
             Console.Write("Fighter's Home Planet: ");
-            string homePlanet = Console.ReadLine()!;
+            string homePlanet = Console.ReadLine()!.Trim();
             Console.Write("Fighter's PowerLevel: ");
             int powerLevel = int.Parse(Console.ReadLine()!);
 
             fighters.Add(new(name, race, homePlanet, powerLevel));
+            Console.WriteLine("");
         }
         catch (FormatException ex)
         {

@@ -1,16 +1,11 @@
-class ZFighter {
-    public string Name { get; set; }
-    public string Race { get; set; }
-    public string HomePlanet { get; set; }
-    public int PowerLevel { get; set; }
+namespace ZFighters;
 
-    public ZFighter(string name, string race, string homePlanet, int powerLevel)
-    {
-        Name = name;
-        Race = race;
-        HomePlanet = homePlanet;
-        PowerLevel = powerLevel;
-    }
+public class ZFighter(string name, string race, string homePlanet, int powerLevel)
+{
+    public string Name { get; set; } = name;
+    public string Race { get; set; } = race;
+    public string HomePlanet { get; set; } = homePlanet;
+    public int PowerLevel { get; set; } = powerLevel;
 
     public override string ToString()
     {
