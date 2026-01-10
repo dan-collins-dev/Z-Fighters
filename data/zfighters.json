@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Goku",
+    "race": "Saiyan",
+    "homePlanet": "Planet Vegeta",
+    "powerLevel": 9001
+  },
+  {
+    "name": "Vegeta",
+    "race": "Saiyan",
+    "homePlanet": "Planet Vegeta",
+    "powerLevel": 15500
+  },
+  {
+    "name": "Gohan",
+    "race": "Half-Saiyan",
+    "homePlanet": "Earth",
+    "powerLevel": 7000
+  },
+  {
+    "name": "Krillin",
+    "race": "Human",
+    "homePlanet": "Earth",
+    "powerLevel": 2000
+  },
+  {
+    "name": "Piccolo",
+    "race": "Namekian",
+    "homePlanet": "Namek",
+    "powerLevel": 5000
+  }
+]
