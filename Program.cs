@@ -12,14 +12,14 @@ class Program
             DisplayMenu();
             string userInput = Console.ReadLine() ?? "";
             Console.WriteLine("");
-            int choice = ValidateInput(userInput);
+            int choice = InputHandler.ValidateInput(userInput);
 
             switch (choice)
             {
                 case 1:
                     DisplayAllZFighters(zFighters);
                     break;
-                
+
                 case 2:
                     AddZFighter(zFighters);
                     break;
@@ -27,62 +27,15 @@ class Program
                 case 3:
                     Utils.SaveZFightersToFile(zFighters);
                     break;
-                
+
                 case 4:
                     isRunning = false;
                     break;
-                
+
                 default:
                     Console.WriteLine("Invalid Choice");
                     break;
             }
-        }
-    }
-
-    public static void AddZFighter(List<ZFighter> fighters)
-    {
-        try
-        {
-            Console.Write("Fighter's Name: ");
-            string name = Console.ReadLine()!.Trim();
-
-            Console.Write("Fighter's Race: ");
-            string race = Console.ReadLine()!.Trim();
-            
-            Console.Write("Fighter's Home Planet: ");
-            string homePlanet = Console.ReadLine()!.Trim();
-            
-            Console.Write("Fighter's Power Level: ");
-            int powerLevel = int.Parse(Console.ReadLine()!);
-            Console.WriteLine("");
-
-            if (name.Length <= 0 || race.Length <= 0 || homePlanet.Length <= 0)
-            {
-                throw new FormatException("Name cannot be an empty string");
-            }
-
-            if (powerLevel <= 0)
-            {
-                throw new ArgumentOutOfRangeException("A fighter's power level must be above 0");
-            }
-
-            fighters.Add(new(name, race, homePlanet, powerLevel));
-            Console.WriteLine("");
-        }
-        catch (FormatException ex)
-        {
-            Console.WriteLine($"{ex.Message}");
-            Console.WriteLine("Fighter not created");
-        }
-        catch (OverflowException ex)
-        {
-            Console.WriteLine($"{ex.Message}");
-            Console.WriteLine("Fighter not created");
-        }
-        catch (ArgumentOutOfRangeException ex)
-        {
-            Console.WriteLine($"{ex.Message}");
-            Console.WriteLine("Fighter not created");
         }
     }
 
@@ -94,7 +47,8 @@ class Program
         Console.WriteLine("[1] Display all Z Fighters");
         Console.WriteLine("[2] Add a Z Fighter");
         Console.WriteLine("[3] Save existing Z Fighters");
-        Console.WriteLine("[4] Quit without saving");
+        Console.WriteLine("[4] Quit");
+        Console.Write("\nEnter your choice: ");
     }
 
     public static void DisplayAllZFighters(List<ZFighter> fighters)
@@ -105,21 +59,34 @@ class Program
         }
     }
 
-    static int ValidateInput(string userInput)
+    public static void AddZFighter(List<ZFighter> fighters)
     {
         try
         {
-            return int.Parse(userInput);
+            Console.Write("Fighter's Name: ");
+            string name = Console.ReadLine()!.Trim();
+            InputHandler.ValidateName(name);
+
+            Console.Write("Fighter's Race: ");
+            string race = Console.ReadLine()!.Trim();
+            InputHandler.ValidateRace(race);
+
+            Console.Write("Fighter's Home Planet: ");
+            string homePlanet = Console.ReadLine()!.Trim();
+            InputHandler.ValidateHomePlanet(homePlanet);
+
+            Console.Write("Fighter's Power Level: ");
+            int powerLevel = int.Parse(Console.ReadLine()!);
+            InputHandler.ValidatePowerLevel(powerLevel);
+            
+            Console.WriteLine("");
+
+            fighters.Add(new(name, race, homePlanet, powerLevel));
+            Console.WriteLine("");
         }
-        catch (OverflowException ex)
+        catch (Exception ex)
         {
-            Console.WriteLine($"\n{ex.Message}\n");
-            return -1;
-        }
-        catch (FormatException ex)
-        {
-            Console.WriteLine($"\n{ex.Message}\n");
-            return -1;
+            InputHandler.HandleExceptions(ex);
         }
     }
 }
